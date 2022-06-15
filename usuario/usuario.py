@@ -35,7 +35,7 @@ class Usuario:
         return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.senha = $senha RETURN u',
                                      {'nome': self.nome, 'senha': senha})
 
-    def delete(self):
+    def deletaConta(self):
         return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) DELETE u',
                                      {'nome': self.nome})
 
@@ -63,4 +63,3 @@ class Usuario:
         return self.db.execute_query('MATCH (u:Usuario{nome: $nome})-[r:OUVIR_DEPOIS]->(m:Midia{nome:$musica}) DELETE r',
                                      {'nome': self.nome, 'musica': musica})    
 
-                                                                              
