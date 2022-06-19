@@ -14,7 +14,7 @@ class Usuario:
 
     def createUsuario(self):
         return self.db.execute_query('CREATE (u:Usuario {nome:$nome, email:$email, senha:$senha, data_de_nascimento:$data_de_nascimento, metodo_de_pagamento:$metodo_de_pagamento, dia_do_vencimento:$dia_do_vencimento, cpf:$cpf, premium:$premium}) return u',
-                                     {'nome': self.nome, 'email':self.email, 'senha': self.senhavoc, 'data_de_nascimento': self.data_de_nascimento, 'metodo_de_pagamento': self.metodo_de_pagamento, 'dia_do_vencimento': self.dia_do_vencimento, 'cpf': self.cpf, 'premium': True})
+                                     {'nome': self.nome, 'email':self.email, 'senha': self.senha, 'data_de_nascimento': self.data_de_nascimento, 'metodo_de_pagamento': self.metodo_de_pagamento, 'dia_do_vencimento': self.dia_do_vencimento, 'cpf': self.cpf, 'premium': True})
 
     def acessaMidia(self, musica):
         return self.db.execute_query('MATCH (m:Midia {nome:$musica}) RETURN m',
