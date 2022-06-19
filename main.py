@@ -30,6 +30,7 @@ def menuMusica(user):
     if(mop=="1"):
         for music in db.getAllMusics():
             musicaFormatada(music)
+        menuMusica(user)
     elif(mop=="2"):
         print("Buscar por:", end=" ")
         musicName = input()
@@ -69,7 +70,7 @@ def menuMusica(user):
         menuMusica(user)
 
 def menuAdmMusica(user):
-    print(" 1 - Adicionar Musica \n 2 - Remover Musica \n  3 - Ver Todas Musicas \n 4 - Buscar uma Musica \n 5 - Adicionar Musica Favoritos \n 6 - Remover Musica Favoritos \n 7 - Adicionar Musica Ouvir Depois \n 8 - Remover Musica Ouvir Depois \n 0 - Voltar")
+    print(" 1 - Adicionar Musica \n 2 - Remover Musica \n 3 - Ver Todas Musicas \n 4 - Buscar uma Musica \n 5 - Adicionar Musica Favoritos \n 6 - Remover Musica Favoritos \n 7 - Adicionar Musica Ouvir Depois \n 8 - Remover Musica Ouvir Depois \n 0 - Voltar")
     mop = input()
     if(mop=="1"):
         nome = input("Nome: ")
@@ -119,11 +120,12 @@ def menuAdmMusica(user):
         musicName = input("Musica: ")
         user.deletaOuvirDepois(musicName)
         print("Musica Deletada")
+        menuAdmMusica(user)
     elif(mop=="0"):
         menuAdmin(user)
     else:
         print("Opção Invalida!")
-    menuAdmMusica(user)
+        menuAdmMusica(user)
 
 def mostrarDados(user):
     print(f"Nome: {user.nome}")
