@@ -1,4 +1,5 @@
 from neo4j import GraphDatabase
+from sympy import use
 
 
 class Graph:
@@ -26,17 +27,18 @@ class Graph:
         
         aux = self.execute_query("match(n:Usuario where n.email = $email and n.senha = $senha) return n",
         {'email':email, 'senha':senha})
-        if(aux.count>0):
-            user = {aux[0]["nome"],
-                    aux[0]["email"],
-                    aux[0]["senha"],
-                    aux[0]["data_de_nascimento"],
-                    aux[0]["metodo_de_pagamento"],
-                    aux[0]["dia_do_vencimento"],
-                    aux[0]["cpf"]}
-            if(aux[0]["labels"]=="Usuario"):
-                return {user, "usuario"}
-            elif(aux[0]["labels"]=="Admin"):
-                return {user, "admin"}
+        if(len(aux)>0):
+            user = {"nome":aux[0]["nome"],
+                    "email":aux[0]["email"],
+                    "senha":aux[0]["senha"],
+                    "nascimento":aux[0]["data_de_nascimento"],
+                    "pagamento":aux[0]["metodo_de_pagamento"],
+                    "vencimento":aux[0]["dia_do_vencimento"],
+                    "cpf":aux[0]["cpf"]}
+            if("Admin" in aux[0]["labels"]):
+                user["type"] = "admin"
+            else:
+                user["type"] = "user"
+            return user
         else:
             return False

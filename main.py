@@ -1,5 +1,3 @@
-import getpass
-
 from database.database import Graph
 from usuario.admin import Admin
 from usuario.usuario import Usuario
@@ -8,6 +6,12 @@ def welcome():
     print(f"Bem Vindo ao toListen!")
     menu()
 
+def menuUser(user):
+    print("Menu Usuario")
+
+def menuAdmin(admin):
+    print("Menu Admin")
+
 def entrar():
     print("Email:", end=" ")
     email = input()
@@ -15,8 +19,12 @@ def entrar():
     senha = input()
     obj = db.login(email,senha)
     if(obj!=False):
-        print(obj)
-
+        if(obj["type"]=="admin"):
+            adm = Admin(obj["nome"],obj["email"],obj["senha"],obj["nascimento"],obj["pagamento"],obj["vencimento"],obj["cpf"])
+            menuAdmin(adm)
+        else:
+            user = Usuario(obj["nome"],obj["email"],obj["senha"],obj["nascimento"],obj["pagamento"],obj["vencimento"],obj["cpf"])
+            menuUser(user)
 
 def registrar():
     print("Tipo de Conta: 1 - Usuario | 2 - Administrador | 0 - Cancelar")
