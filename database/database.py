@@ -22,7 +22,7 @@ class Graph:
                 obj["labels"] = labels
                 data.append(obj)
             return data
-    
+
     def login(self, email, senha):
         
         aux = self.execute_query("match(n:Usuario where n.email = $email and n.senha = $senha) return n",
@@ -42,3 +42,6 @@ class Graph:
             return user
         else:
             return False
+
+    def getAllMusics(self):
+        return self.execute_query("Match(m:Midia) return m")

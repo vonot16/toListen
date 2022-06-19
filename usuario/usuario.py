@@ -24,16 +24,22 @@ class Usuario:
         return f"nome: {self.nome}, email: {self.email}, dia do vencimento: {self.dia_do_vencimento}, metodo de pagamento: {self.metodo_de_pagamento}"
 
     def alteraVencimento(self, vencimento):
-        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.dia_do_vencimento = $vencimento RETURN u',
-                                     {'nome': self.nome, 'dia do vencimento': vencimento})
-    
-    def alteraEmail(self, email):
-        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.email = $email RETURN u',
-                                     {'nome': self.nome, 'email': email})
+        aux = self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.dia_do_vencimento = $vencimento RETURN u',
+                                     {'nome': self.nome, 'vencimento': vencimento})
+        self.vencimento = vencimento
+        return aux
 
-    def alteraVencimento(self, senha):
-        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.senha = $senha RETURN u',
+    def alteraEmail(self, email):
+        aux = self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.email = $email RETURN u',
+                                     {'nome': self.nome, 'email': email})
+        self.email = email
+        return aux
+
+    def alteraSenha(self, senha):
+        aux = self.db.execute_query('MATCH (u:Usuario {nome:$nome}) SET u.senha = $senha RETURN u',
                                      {'nome': self.nome, 'senha': senha})
+        self.senha = senha
+        return aux
 
     def deletaConta(self):
         return self.db.execute_query('MATCH (u:Usuario {nome:$nome}) DELETE u',
@@ -48,7 +54,7 @@ class Usuario:
                                      {'nome': self.nome, 'premium': False})
 
     def addMusicaFavorita(self, musica):
-        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}), (m:Midia {nome:$musica}) CREATE (u)-[r:FAVORITA]->(m) RETURN r, u, m',
+        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}), (m:Midia {nome:$musica}) CREATE (u)-[r:FAVORITA]->(m) RETURN u, m',
                                      {'nome': self.nome, 'musica': musica})
 
     def deletaFavorito(self, musica):
@@ -56,7 +62,7 @@ class Usuario:
                                      {'nome': self.nome, 'musica': musica})
 
     def ouvirDepois(self, musica):
-        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}), (m:Midia {nome:$musica}) CREATE (u)-[r:OUVIR_DEPOIS]->(m) RETURN r, u, m',
+        return self.db.execute_query('MATCH (u:Usuario {nome:$nome}), (m:Midia {nome:$musica}) CREATE (u)-[r:OUVIR_DEPOIS]->(m) RETURN u, m',
                                      {'nome': self.nome, 'musica': musica})                                                                                  
 
     def deletaOuvirDepois(self, musica):

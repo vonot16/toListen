@@ -10,6 +10,6 @@ class Midia:
         self.db = Graph(uri='bolt://localhost:7687',
                         user='neo4j', password='bd2')
     
-    def createMidia(self, midia):
+    def createMidia(self):
         return self.db.execute_query('CREATE (m:Midia {nome:$nome, lancamento:$lancamento, criador:$criador, duracao:$duracao, genero:$genero}) return m',
-                                     {'nome': midia['nome'], 'lancamento': midia['lancamento'], 'criador': midia['criador'], 'duracao': midia['duracao'], 'genero': midia['genero']})
+                                     {'nome': self.nome, 'lancamento': self.lancamento, 'criador': self.criador, 'duracao': self.duracao, 'genero': self.genero})
